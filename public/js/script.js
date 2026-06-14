@@ -18,6 +18,10 @@ const getInfo = async (event) => {
             let url = `https://api.openweathermap.org/data/2.5/weather?q=${cityVal}&units=metric&appid=ebd6c66f26efaf601967e54a65b176c9`
             const response = await fetch(url);
             const data = await response.json();
+            if (data.cod == "404") {
+                alert("City not found. Please enter a valid city name.");
+                return;
+            }
             const arrData = [data];
 
             city_name_country.innerText = `${arrData[0].name}, ${arrData[0].sys.country}`;
@@ -45,7 +49,8 @@ const getInfo = async (event) => {
         } catch {
             city_name_country.innerText = `Enter a valid City Name check your spelling or Internet Connection`
             hideData.classList.add('hide_data');
-            alert('Connection Error!!!');
+            // alert('Enter a valid City Name check your spelling or Internet Connection');
+            alert('Unable to connect. Please check your internet connection and try again.');
         }
     }
 };
